@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<style>
+.hdr {
+    padding: 50px 5px 27px 5px;
+}
+
+.hvr:hover {
+    background-color: LightGoldenRodYellow;
+}
+
+.mime {
+    padding: 0px 5px 0px 5px;
+    margin: 0px 5px 0px 5px;
+    border-radius: 2px;
+}
+
+.application\/vnd\.google-apps\.spreadsheet {
+    background-color: #0f9d58;
+    color: white;
+}
+
+.application\/vnd\.google-apps\.spreadsheet::after {
+    content: "S";
+}
+
+.application\/vnd\.google-apps\.document {
+    background-color: #4285f4;
+    color: white;
+}
+
+.application\/vnd\.google-apps\.document::after {
+    content: "D";
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+<div data-ng-app="app">
+    <div data-ng-controller="Ctrl" class="container">
+        <div class="row hdr">
+            <div class="col-md-7">
+                <div class="btn-group btn-group-xs">
+                    <a href="#" type="button" class="btn" data-ng-repeat="folder in catalog | orderBy : 'name'" ng-click="getFiles(folder)" data-ng-class="{'btn-info': folder==activeFolder}">{{folder.name}}</a>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" placeholder="Type name of the folder" ng-model="searchCatalog" ng-keyup="$event.keyCode == 13 && getFolders()" />
+                    <span class="input-group-btn">
+						<button class="btn btn-default" type="button" ng-click="getFolders()">Go!</button>
+					</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="alert alert-info" ng-if="!activeFolder">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Info:</span> Select a folder
+            </div>
+        </div>
+        <div data-ng-repeat="file in files | orderBy : 'name'" class="row hvr">
+            <div class="col-md-4"><span class="{{file.mime}} mime"></span><a ng-href="{{file.url}}" target="_blank">{{file.name}}</a></div>
+            <div class="col-md-8">
+                <div class="btn-group btn-group-xs" data-ng-repeat="parent in active | orderBy: 'name'">
+                    <a href="#" type="button" class="btn" data-ng-class="{'btn-primary': file.parents.indexOf(parent.id) != -1}" ng-click="changeParent(file, parent.id)">{{parent.name}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?!= include('app'); ?>
+    <?!= include('factory_gsrun'); ?>
+        <?!= include('controller_Ctrl'); ?>
