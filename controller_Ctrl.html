@@ -1,0 +1,48 @@
+<script>
+app.controller('Ctrl', ['$scope', 'gsrun', function($scope, gsrun) {
+    $scope.activeFolder = '';
+    $scope.searchCatalog = null;
+    $scope.files = [];
+    $scope.catalog = [];
+    $scope.active = [];
+    $scope.getFolders = function() {
+        gsrun.exec($scope.searchCatalog, 'getFolders', function(e) {
+            $scope.$apply(function() {
+                $scope.active = e.active;
+                if (e.catalog.length > 0) {
+                    $scope.catalog = e.catalog;
+                } else {
+                    $scope.catalog = e.active;
+                }
+                $scope.files = [];
+                $scope.activeFolder = '';
+            });
+        });
+    };
+    $scope.getFiles = function(folder) {
+        $scope.activeFolder = folder;
+        gsrun.exec(folder, 'getFiles', function(e) {
+            $scope.$apply(function() {
+                $scope.files = e;
+            });
+        });
+    };
+    $scope.changeParent = function(file, parentId) {
+        var p = {
+            file: file,
+            parentId: parentId
+        };
+        gsrun.exec(p, 'changeParent', function(e) {
+            $scope.$apply(function() {
+                for (var i = 0; i < $scope.files.length; i++) {
+                    if ($scope.files[i].id == e.id) {
+                        $scope.files[i].parents = e.parents;
+                        break;
+                    }
+                }
+            });
+        });
+    }
+    $scope.getFolders();
+}]);
+</script>
