@@ -1,0 +1,13 @@
+<script>
+  app.factory('gsrun', 
+    function() {
+      var exec = function(params, api, onSuccess, onFailure) {
+        //if(!angular.isObject(params)) params = {};
+        google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure)[api](params);
+      }
+      return {
+        exec : exec
+      }
+    }
+  );
+</script>
