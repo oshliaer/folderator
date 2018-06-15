@@ -20,8 +20,6 @@ Let's imagine we have a structure of folders on Google Drive
 
 We need to append the file to a folder or folders of ACTIVE. For an example `File 1_1` to `Work`. The Folderator does it.
 
-[![Google Drive. Saving a Document in Multiple Folders ](http://img.youtube.com/vi/znzoyFKKjvA/0.jpg)](http://www.youtube.com/watch?v=znzoyFKKjvA)
-
 ## How to use
  - Create a Google Apps Script project (or copy [last version](https://script.google.com/d/1F30LNOzB86pJwWXbxNmS1DHYsOo6D6gN4ijBHo8M_MppBmq5YdyV9R-n/edit?usp=sharing) Then skip the next step)
  - Add all of this repo files to the project
